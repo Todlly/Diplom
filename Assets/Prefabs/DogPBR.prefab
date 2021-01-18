@@ -1993,6 +1993,7 @@ GameObject:
   - component: {fileID: 5281923978673313795}
   - component: {fileID: 5753548920469609171}
   - component: {fileID: 6763406288278679463}
+  - component: {fileID: 7875910039421823642}
   m_Layer: 0
   m_Name: DogPBR
   m_TagString: Untagged
@@ -2008,7 +2009,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5281923978680708045}
   m_LocalRotation: {x: -0, y: 0.0000013411044, z: -0, w: 1}
-  m_LocalPosition: {x: -0.13, y: -0.9999997, z: 0.28}
+  m_LocalPosition: {x: -0.13, y: 0.49, z: 0.28}
   m_LocalScale: {x: 2.7236, y: 1.8157333, z: 2.7236}
   m_Children:
   - {fileID: 5281923978681005677}
@@ -2026,7 +2027,7 @@ Animator:
   m_GameObject: {fileID: 5281923978680708045}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d9a1483b77bf10e4e851678ab6c2e54e, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b60dc9aa529b314489f628aa3b57c470, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2063,6 +2064,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
+--- !u!114 &7875910039421823642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281923978680708045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 533111be81e136a468d38703b42bf473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5281923978680708047
 GameObject:
   m_ObjectHideFlags: 0
