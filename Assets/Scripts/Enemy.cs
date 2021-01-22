@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour//, IHavingHealth
 {
-    private int Health { get; set; }
+    private int MaxHealth { get; set; }
+    private int CurrentHealth { get; set; }
     private Animator Animator { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,12 +18,22 @@ public class Enemy : MonoBehaviour//, IHavingHealth
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    private void Die()
+    {
+
     }
 
     private void GetDamage(int damageAmount)
     {
         Debug.Log("Enemy got hit for " + damageAmount + " damage.");
         Animator.SetTrigger("GetHit");
+        CurrentHealth -= damageAmount;
+        if(CurrentHealth <= 0)
+        {
+            Die();
+        }
     }
 }

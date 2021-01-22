@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Fighting : MonoBehaviour
 {
+    public Sprite Dummy { get; set; }
+
     private float AttackRange { get; set; } = 5f;
     private float AttackAngle { get; set; }
     private int AttackDamage { get; set; } = 1;
@@ -15,6 +17,7 @@ public class Fighting : MonoBehaviour
     private Animator Animator { get; set; }
     private NavMeshAgent Navigator { get; set; }
 
+    private Image TargetFrame { get; set; }
     public Enemy SelectedEnemy { get; set; }
     private Rigidbody Player { get; set; }
 
@@ -27,6 +30,9 @@ public class Fighting : MonoBehaviour
         Animator = GetComponent<Animator>();
         Navigator = GetComponent<NavMeshAgent>();
 
+        Dummy = Resources.Load<Sprite>("Icons/Dummy");
+        Debug.Log(Dummy);
+        TargetFrame = GameObject.Find("TargetFrame").GetComponent<Image>();
         EnemyLabel = GameObject.Find("SelectedEnemyLabel").GetComponent<Text>();
     }
 
@@ -48,9 +54,17 @@ public class Fighting : MonoBehaviour
         }
 
         if (SelectedEnemy != null)
+        {
+            TargetFrame.sprite = Dummy;
+            TargetFrame.enabled = true;
             EnemyLabel.text = SelectedEnemy.name + ", IsAttacking = " + IsAttacking + Vector3.Distance(Player.position, SelectedEnemy.transform.position);
+        }
         else
+        {
+            TargetFrame.sprite = null;
+            TargetFrame.enabled = false;
             EnemyLabel.text = "No enemy selected" + ", IsAttacking = " + IsAttacking;
+        }
     }
 
     private void FixedUpdate()
@@ -81,7 +95,7 @@ public class Fighting : MonoBehaviour
     {
         if (SelectedEnemy != null)
         {
-            float distance = Vector3.Distance(Player.position, SelectedEnemy.transform.position);
+            float distance = Vector3.Distance(Player.transform.position, SelectedEnemy.transform.position);
             if (distance > AttackRange)
             {
                 IsAttacking = false;
