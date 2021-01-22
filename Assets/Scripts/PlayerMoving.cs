@@ -29,11 +29,12 @@ public class PlayerMoving : MonoBehaviour
         Player = GetComponent<Rigidbody>();
         FightingScript = GetComponent<Fighting>();
         MainCamera = Camera.main;
-        Animator = GetComponent<Animator>();
-        Navigator = GetComponent<NavMeshAgent>();
+        Animator = GetComponentInChildren<Animator>();
+        Navigator = GetComponentInChildren<NavMeshAgent>();
         WayPointer = GameObject.Find("WayPointer");
         MovingLayerMask = LayerMask.GetMask("Ground", "Enemy");
 
+        Navigator.updateRotation = false;
         // Offset = Player.transform.position - MainCamera.transform.position;
         Offset = new Vector3(0.0f, -15.1f, 10.8f);
 
@@ -59,11 +60,12 @@ public class PlayerMoving : MonoBehaviour
         }
 
         MovePlayerClick();
+        Debug.Log("Has path: " + Navigator.hasPath + ", status: " + Navigator.pathStatus);
     }
 
     private void FixedUpdate()
     {
-        if (Navigator.velocity.magnitude > 0f)
+        if (Navigator.hasPath)
             Player.rotation = Quaternion.LookRotation(Navigator.destination - Player.position);
         // MovePlayer();
         // RotatePlayer();
@@ -93,7 +95,8 @@ public class PlayerMoving : MonoBehaviour
                 Navigator.ResetPath();
                 FightingScript.SelectedEnemy = null;
                 FightingScript.IsAttacking = false;
-                Navigator.stoppingDistance = 0.5f;
+                Navigator.stoppingDistance = 1f;
+                Player.velocity = Vector3.zero;
 
                 WayPointer.transform.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
 

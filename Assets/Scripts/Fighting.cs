@@ -8,7 +8,7 @@ public class Fighting : MonoBehaviour
 {
     public Sprite Dummy { get; set; }
 
-    private float AttackRange { get; set; } = 5f;
+    private float AttackRange { get; set; } = 6f;
     private float AttackAngle { get; set; }
     private int AttackDamage { get; set; } = 1;
     private float AutoattackTime { get; set; } = 1.5f;
@@ -27,11 +27,10 @@ public class Fighting : MonoBehaviour
     void Start()
     {
         Player = GetComponent<Rigidbody>();
-        Animator = GetComponent<Animator>();
-        Navigator = GetComponent<NavMeshAgent>();
+        Animator = GetComponentInChildren<Animator>();
+        Navigator = GetComponentInChildren<NavMeshAgent>();
 
         Dummy = Resources.Load<Sprite>("Icons/Dummy");
-        Debug.Log(Dummy);
         TargetFrame = GameObject.Find("TargetFrame").GetComponent<Image>();
         EnemyLabel = GameObject.Find("SelectedEnemyLabel").GetComponent<Text>();
     }
@@ -55,8 +54,8 @@ public class Fighting : MonoBehaviour
 
         if (SelectedEnemy != null)
         {
-            TargetFrame.sprite = Dummy;
             TargetFrame.enabled = true;
+            TargetFrame.sprite = Dummy;
             EnemyLabel.text = SelectedEnemy.name + ", IsAttacking = " + IsAttacking + Vector3.Distance(Player.position, SelectedEnemy.transform.position);
         }
         else
@@ -103,6 +102,7 @@ public class Fighting : MonoBehaviour
                 Navigator.SetDestination(SelectedEnemy.transform.position);
                 Player.rotation = Quaternion.LookRotation(Navigator.destination - Player.position);
                 Animator.SetBool("IsWalking", true);
+                Animator.SetBool("IsAttacking", false);
             }
             else
             {
@@ -111,13 +111,13 @@ public class Fighting : MonoBehaviour
                 //   if (!IsAttacking)
                 //       StartCoroutine(Attacking(SelectedEnemy));
                 // Navigator.ResetPath();
-                Debug.Log("Approached");
                 IsAttacking = true;
-                StartCoroutine(Attacking(SelectedEnemy));
+                Animator.SetBool("IsAttacking", true);
             }
         }
         else
         {
+            Animator.SetBool("IsAttacking", false);
             IsAttacking = false;
         }
 
