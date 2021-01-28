@@ -8,7 +8,7 @@ public class Fighting : MonoBehaviour
 {
     public Sprite Dummy { get; set; }
 
-    private float AttackRange { get; set; } = 6f;
+    public float AttackRange { get; set; } = 6f;
     private float AttackAngle { get; set; }
     private int AttackDamage { get; set; } = 1;
     private float AutoattackTime { get; set; } = 1.5f;
@@ -27,8 +27,8 @@ public class Fighting : MonoBehaviour
     void Start()
     {
         Player = GetComponent<Rigidbody>();
-        Animator = GetComponentInChildren<Animator>();
-        Navigator = GetComponentInChildren<NavMeshAgent>();
+        Animator = GetComponent<Animator>();
+        Navigator = GetComponent<NavMeshAgent>();
 
         Dummy = Resources.Load<Sprite>("Icons/Dummy");
         TargetFrame = GameObject.Find("TargetFrame").GetComponent<Image>();
@@ -56,7 +56,7 @@ public class Fighting : MonoBehaviour
         {
             TargetFrame.enabled = true;
             TargetFrame.sprite = Dummy;
-            EnemyLabel.text = SelectedEnemy.name + ", IsAttacking = " + IsAttacking + Vector3.Distance(Player.position, SelectedEnemy.transform.position);
+            EnemyLabel.text = SelectedEnemy.name + ", IsAttacking = " + Vector3.Distance(Player.position, SelectedEnemy.transform.position);
         }
         else
         {
@@ -68,8 +68,6 @@ public class Fighting : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsAttacking)
-            Player.transform.rotation = Quaternion.LookRotation(SelectedEnemy.transform.position - Player.position);
         ApproachForAttack();
     }
 
@@ -78,39 +76,21 @@ public class Fighting : MonoBehaviour
         SelectedEnemy.gameObject.SendMessage("GetDamage", AttackDamage);
     }
 
-    IEnumerator Attacking(Enemy enemy)
-    {
-        Animator.SetBool("Attack1", true);
-
-        while (IsAttacking)
-        {
-            yield return null;
-        }
-
-        Animator.SetBool("Attack1", false);
-    }
-
     private void ApproachForAttack()
     {
         if (SelectedEnemy != null)
         {
-            float distance = Vector3.Distance(Player.transform.position, SelectedEnemy.transform.position);
+            float distance = Vector3.Distance(transform.position, SelectedEnemy.transform.position);
+            EnemyLabel.text = "Distance " + distance;
             if (distance > AttackRange)
             {
-                IsAttacking = false;
-                Navigator.stoppingDistance = AttackRange;
-                Navigator.SetDestination(SelectedEnemy.transform.position);
-                Player.rotation = Quaternion.LookRotation(Navigator.destination - Player.position);
-                Animator.SetBool("IsWalking", true);
                 Animator.SetBool("IsAttacking", false);
             }
             else
             {
-                //   Animator.SetBool("IsWalking", false);
+                Quaternion lookTo = Quaternion.LookRotation(SelectedEnemy.transform.position - transform.position);
+                transform.eulerAngles = new Vector3(0, lookTo.eulerAngles.y, 0);
 
-                //   if (!IsAttacking)
-                //       StartCoroutine(Attacking(SelectedEnemy));
-                // Navigator.ResetPath();
                 IsAttacking = true;
                 Animator.SetBool("IsAttacking", true);
             }
@@ -118,7 +98,6 @@ public class Fighting : MonoBehaviour
         else
         {
             Animator.SetBool("IsAttacking", false);
-            IsAttacking = false;
         }
 
     }

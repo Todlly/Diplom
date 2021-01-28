@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour//, IHavingHealth
         Animator = GetComponent<Animator>();
         HealthBar = GetComponentInChildren<Slider>();
 
-        MaxHealth = 20;
+        MaxHealth = 5;
         HealthBar.minValue = 0;
         HealthBar.maxValue = MaxHealth;
 
@@ -32,13 +32,12 @@ public class Enemy : MonoBehaviour//, IHavingHealth
 
     private void Die()
     {
-
+        Destroy(this.gameObject);
     }
 
     private void GetDamage(int damageAmount)
     {
         Debug.Log("Enemy got hit for " + damageAmount + " damage.");
-        Animator.SetTrigger("GetHit");
         CurrentHealth -= damageAmount;
         if(CurrentHealth <= 0)
         {

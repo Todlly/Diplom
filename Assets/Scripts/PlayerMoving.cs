@@ -10,14 +10,14 @@ public class PlayerMoving : MonoBehaviour
     public float ScaleSpeed { get; set; } = 5f;
     public bool IsMoving { get; set; }
 
+
     [SerializeField]
     private Camera MainCamera { get; set; }
 
-    private Rigidbody Player { get; set; }
     private Fighting FightingScript { get; set; }
     private Vector3 Offset { get; set; }
     private Animator Animator { get; set; }
-    private NavMeshAgent Navigator { get; set; }
+    public NavMeshAgent Navigator { get; set; }
     private GameObject WayPointer { get; set; }
     private Vector3 Destination { get; set; }
 
@@ -26,11 +26,10 @@ public class PlayerMoving : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Player = GetComponent<Rigidbody>();
         FightingScript = GetComponent<Fighting>();
         MainCamera = Camera.main;
-        Animator = GetComponentInChildren<Animator>();
-        Navigator = GetComponentInChildren<NavMeshAgent>();
+        Animator = GetComponent<Animator>();
+        Navigator = GetComponent<NavMeshAgent>();
         WayPointer = GameObject.Find("WayPointer");
         MovingLayerMask = LayerMask.GetMask("Ground", "Enemy");
 
@@ -43,32 +42,28 @@ public class PlayerMoving : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MainCamera.transform.position = Player.transform.position - Offset;
-        MainCamera.transform.LookAt(Player.transform);
+        MainCamera.transform.position = transform.position - Offset;
+        MainCamera.transform.LookAt(transform);
         ScaleCamera();
 
         if (Navigator.remainingDistance <= Navigator.stoppingDistance)
         {
-            Animator.SetBool("IsWalking", false);
             WayPointer.SetActive(false);
         }
         else
         {
-            Animator.SetBool("IsWalking", true);
             if (FightingScript.SelectedEnemy == null)
                 WayPointer.SetActive(true);
         }
 
         MovePlayerClick();
-        Debug.Log("Has path: " + Navigator.hasPath + ", status: " + Navigator.pathStatus);
+        // Debug.Log("Has path: " + Navigator.hasPath + ", status: " + Navigator.pathStatus);
     }
 
     private void FixedUpdate()
     {
-        if (Navigator.hasPath)
-            Player.rotation = Quaternion.LookRotation(Navigator.destination - Player.position);
-        // MovePlayer();
-        // RotatePlayer();
+        float speed = Navigator.velocity.magnitude / Navigator.speed;
+        Animator.SetFloat("Speed", speed);
     }
 
     private void ScaleCamera()
@@ -78,37 +73,60 @@ public class PlayerMoving : MonoBehaviour
             Offset -= cameraMove;
     }
 
-    private void GettingMouse()
+    private void OnDrawGizmos()
     {
-
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, Navigator.stoppingDistance);
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(Navigator.destination, 0.1f);
     }
-
     private void MovePlayerClick()
     {
-        if (!Input.GetMouseButtonDown(1))
-            return;
-
-        if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, MovingLayerMask))
+        if (Input.GetMouseButtonDown(1))
         {
-            if (hit.collider.gameObject.layer == 6)
+            if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, MovingLayerMask))
             {
+                Quaternion lookTo = Quaternion.LookRotation(hit.point - transform.position);
+
+                transform.eulerAngles = new Vector3(0, lookTo.eulerAngles.y, 0);
+
                 Navigator.ResetPath();
-                FightingScript.SelectedEnemy = null;
-                FightingScript.IsAttacking = false;
-                Navigator.stoppingDistance = 1f;
-                Player.velocity = Vector3.zero;
 
-                WayPointer.transform.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
+                if (hit.collider.gameObject.layer == 6) // hit floor layer
+                {
+                  //  FightingScript.SelectedEnemy = null;
+                    Navigator.stoppingDistance = 0f;
 
-                Navigator.SetDestination(hit.point);
-                // Navigator.SetDestination(new Vector3(hit.point.x, Player.position.y, hit.point.z));
+                    WayPointer.transform.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
+                    WayPointer.SetActive(true);
+                    Navigator.SetDestination(hit.point);
 
-                Player.rotation = Quaternion.LookRotation(Navigator.destination - Player.position);
+                }
+                else if (hit.collider.gameObject.layer == 7) // hit enemy layer
+                {
+
+                    WayPointer.SetActive(false);
+                    Navigator.stoppingDistance = FightingScript.AttackRange;
+                    Navigator.SetDestination(hit.collider.gameObject.transform.position);
+                    FightingScript.SelectedEnemy = hit.transform.GetComponentInParent<Enemy>();
+                }
             }
-            else if (hit.collider.gameObject.layer == 7)
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity))
             {
-                Navigator.ResetPath();
-                FightingScript.SelectedEnemy = hit.collider.gameObject.GetComponent<Enemy>();
+                if (hit.collider.gameObject.layer != 7)
+                {
+                    FightingScript.SelectedEnemy = null;
+                }else{
+                    FightingScript.SelectedEnemy = hit.collider.gameObject.GetComponent<Enemy>();
+                    Debug.Log("left clicked enemy");
+                }
+            }
+            else
+            {
+                FightingScript.SelectedEnemy = null;
             }
         }
     }
