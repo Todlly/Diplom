@@ -10,7 +10,7 @@ public class Fighting : MonoBehaviour
 
     public float AttackRange { get; set; } = 6f;
     private float AttackAngle { get; set; }
-    private int AttackDamage { get; set; } = 1;
+    private int AttackDamage { get; set; } = 3;
     private float AutoattackTime { get; set; } = 1.5f;
     public bool IsAttacking { get; set; } = false;
 
@@ -66,6 +66,12 @@ public class Fighting : MonoBehaviour
         }
     }
 
+    private void TurnToEnemy()
+    {
+        Quaternion lookTo = Quaternion.LookRotation(SelectedEnemy.transform.position - transform.position);
+        transform.eulerAngles = new Vector3(0, lookTo.eulerAngles.y, 0);
+    }
+
     private void FixedUpdate()
     {
         ApproachForAttack();
@@ -85,11 +91,10 @@ public class Fighting : MonoBehaviour
             if (distance > AttackRange)
             {
                 Animator.SetBool("IsAttacking", false);
+                Navigator.SetDestination(SelectedEnemy.transform.position);
             }
             else
             {
-                Quaternion lookTo = Quaternion.LookRotation(SelectedEnemy.transform.position - transform.position);
-                transform.eulerAngles = new Vector3(0, lookTo.eulerAngles.y, 0);
 
                 IsAttacking = true;
                 Animator.SetBool("IsAttacking", true);

@@ -6,14 +6,22 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour//, IHavingHealth
 {
-    private int MaxHealth { get; set; }
-    private int CurrentHealth { get; set; }
-    private Animator Animator { get; set; }
-    private Slider HealthBar { get; set; }
+    [SerializeField]
+    public int MaxHealth;
+    
+    [SerializeField]
+    public int CurrentHealth;
+    private Animator Animator;
+    private Slider HealthBar;
+    private PlayerHealth Player;
+    private PlayerHealth PlayerHealth;
 
+    public int Damage = 2;
     // Start is called before the first frame update
     void Start()
     {
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        PlayerHealth = Player.GetComponent<PlayerHealth>();
         Animator = GetComponent<Animator>();
         HealthBar = GetComponentInChildren<Slider>();
 
@@ -35,11 +43,18 @@ public class Enemy : MonoBehaviour//, IHavingHealth
         Destroy(this.gameObject);
     }
 
+    private void TurnToPlayer()
+    {
+        transform.eulerAngles = new Vector3(0, Quaternion.LookRotation(Player.transform.position - transform.position).eulerAngles.y, 0);
+    }
+    private void CauseDamage()
+    {
+        PlayerHealth.GetDamage(Damage);
+    }
     private void GetDamage(int damageAmount)
     {
-        Debug.Log("Enemy got hit for " + damageAmount + " damage.");
         CurrentHealth -= damageAmount;
-        if(CurrentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             Die();
         }

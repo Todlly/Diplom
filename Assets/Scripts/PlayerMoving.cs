@@ -10,6 +10,7 @@ public class PlayerMoving : MonoBehaviour
     public float ScaleSpeed { get; set; } = 5f;
     public bool IsMoving { get; set; }
 
+    private PlayerHealth PlayerHealth;
 
     [SerializeField]
     private Camera MainCamera { get; set; }
@@ -26,6 +27,7 @@ public class PlayerMoving : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerHealth = GetComponent<PlayerHealth>();
         FightingScript = GetComponent<Fighting>();
         MainCamera = Camera.main;
         Animator = GetComponent<Animator>();
@@ -73,6 +75,7 @@ public class PlayerMoving : MonoBehaviour
             Offset -= cameraMove;
     }
 
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -94,9 +97,10 @@ public class PlayerMoving : MonoBehaviour
 
                 if (hit.collider.gameObject.layer == 6) // hit floor layer
                 {
-                  //  FightingScript.SelectedEnemy = null;
+                    //  FightingScript.SelectedEnemy = null;
                     Navigator.stoppingDistance = 0f;
 
+                    FightingScript.SelectedEnemy = null;
                     WayPointer.transform.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
                     WayPointer.SetActive(true);
                     Navigator.SetDestination(hit.point);
