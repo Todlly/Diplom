@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6991390927724007764}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Finger0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6242190477684400243}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4998561421152229986}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7526298031307144842}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2512669425125962374}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Forearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,8 @@ GameObject:
   - component: {fileID: 5718684299688464159}
   - component: {fileID: 5846576884807476557}
   - component: {fileID: 8328892022402660341}
-  m_Layer: 7
+  - component: {fileID: 366608299585876801}
+  m_Layer: 8
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,6 +191,7 @@ Transform:
   m_Children:
   - {fileID: 3359797457782026005}
   - {fileID: 3928344738303009099}
+  - {fileID: 7577061020897592487}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -221,6 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 0
   CurrentHealth: 0
+  Type: 1
   Damage: 4
 --- !u!95 &5718684299688464159
 Animator:
@@ -277,6 +280,22 @@ CapsuleCollider:
   m_Height: 5.027385
   m_Direction: 1
   m_Center: {x: 0.05403638, y: 2.3168812, z: -0.08572638}
+--- !u!114 &366608299585876801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187444948313293081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ca0ff3279e622448ddf4e79db65165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
+  SelectionDetector: {fileID: 6719247754847760123}
+  isSelected: 0
+  Icon: {fileID: 21300000, guid: 30f6367ff4a3a57439e8945de3d08ba6, type: 3}
 --- !u!1 &2291781333206924536
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6551307205226723588}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Toe0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +336,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8406333630521199247}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +367,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 843965635283884524}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8127252350064258502}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Clavicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +429,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3347545041857673643}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bone_jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +459,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1066963751818810291}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,7 +492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2914030441086059721}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 634312048948373942}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Toe0Nub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,7 +554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 756690956359965447}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Finger0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +585,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2064530633635744445}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 HeadNub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 339256412985384954}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -627,7 +646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 352465686280065594}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Clavicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +677,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3572182106454553992}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Calf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -689,7 +708,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2105865270533787033}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -723,7 +742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9192933314143197100}
   - component: {fileID: 5720574485936056126}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: skeleton_mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -830,7 +849,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1986300624237093291}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -861,7 +880,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2576060758853736320}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 Footsteps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -891,7 +910,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3341682092694428299}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -922,7 +941,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6219828325418878215}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Finger0Nub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -952,7 +971,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2703720373542379113}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Forearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -983,7 +1002,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8415810433097649870}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 Pelvis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1014,7 +1033,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4906326834583024594}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Toe0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1045,7 +1064,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3359797457782026005}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: DungeonSkeleton_demo (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1077,7 +1096,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1619692250909782638}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Finger0Nub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1107,7 +1126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4172391990534761807}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R UpperArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1138,7 +1157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 910168445242322892}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L UpperArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1169,7 +1188,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8472554561323758904}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 R Toe0Nub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,7 +1218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4214165326583440211}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Bip001 L Calf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1221,6 +1240,125 @@ Transform:
   m_Father: {fileID: 843965635283884524}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &8287702072655249228
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5266708079187322595}
+    m_Modifications:
+    - target: {fileID: 1165737137099581373, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656652371706171353, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.009994507
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3331613846835614135, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_Name
+      value: SelectionDetector
+      objectReference: {fileID: 0}
+    - target: {fileID: 3331613846835614135, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+--- !u!1 &6719247754847760123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3331613846835614135, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+  m_PrefabInstance: {fileID: 8287702072655249228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &7577061020897592487 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+  m_PrefabInstance: {fileID: 8287702072655249228}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8784745273570802894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1230,7 +1368,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 327615497341089805, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 453709885509960954, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_Name
@@ -1238,7 +1376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 453709885509960954, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 553788116563914722, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1254,11 +1392,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4330006250366091233, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5496175709178589320, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5723485726023736709, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_Pivot.x
@@ -1350,15 +1488,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5776753404725993615, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7466967380390152161, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7471277047025830435, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7623045934754425137, guid: 743610480f60e68489017277f57049f0, type: 3}
       propertyPath: m_AnchorMax.x

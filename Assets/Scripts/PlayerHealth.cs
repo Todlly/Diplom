@@ -11,6 +11,9 @@ public class PlayerHealth : MonoBehaviour
     private int MaxHealth = 20;
     private Animator Animator;
     private NavMeshAgent Navigator;
+    private float RegenerationAmount = 1f; // Regen amount per second
+    private float RegenerationDelay = 2;
+    private float RegenerationTimer = 0f;
 
     [SerializeField]
     private Slider HPBar;
@@ -27,27 +30,45 @@ public class PlayerHealth : MonoBehaviour
         HPBar.maxValue = MaxHealth;
         CurrentHealth = MaxHealth;
         HPBar.value = CurrentHealth;
+        StartCoroutine(Regenerate());
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
 
+    void FixedUpdate()
+    {
+        
+    }
+
+    IEnumerator Regenerate()
+    {
+        while (true)
+        {
+            if (CurrentHealth < MaxHealth)
+            {
+                ChangeHealth((int)RegenerationAmount);
+            }
+            yield return new WaitForSeconds(1);
+        }
     }
 
     private void Die()
     {
-
+        gameObject.SendMessage("ClearSelection");
         Debug.Log("You died");
     }
 
 
-    public void GetDamage(int amount)
+    public void ChangeHealth(int amount)
     {
         if (!IsAlive)
             return;
 
-        CurrentHealth -= amount;
+        CurrentHealth += amount;
         HPBar.value = CurrentHealth;
 
         if (CurrentHealth <= 0)
@@ -59,7 +80,7 @@ public class PlayerHealth : MonoBehaviour
             GetComponent<PlayerMoving>().enabled = false;
             Animator.SetTrigger("Die");
         }
-        else
+        else if(amount < 0)
         {
             Animator.SetTrigger("GetHit");
         }

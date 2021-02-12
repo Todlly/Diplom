@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static Enemy;
+using static Interactable;
+using UnityEngine.UI;
 
 public class PlayerMoving : MonoBehaviour
 {
-    public float MovementSpeed { get; set; } = 9f;
-    public float SprintMultiplier { get; set; } = 1.6f;
     public float ScaleSpeed { get; set; } = 5f;
-    public bool IsMoving { get; set; }
-
     private PlayerHealth PlayerHealth;
 
     [SerializeField]
@@ -20,20 +19,49 @@ public class PlayerMoving : MonoBehaviour
     private Animator Animator { get; set; }
     public NavMeshAgent Navigator { get; set; }
     private GameObject WayPointer { get; set; }
-    private Vector3 Destination { get; set; }
+    private Sprite Dummy;
+    private Animator WayPointerAnimator;
+    public bool isHeadingToTarget = false;
+
+    private Interactable selection;
+    public Interactable Selection
+    {
+        get
+        {
+            return selection;
+        }
+
+        set
+        {
+            if (selection != null)
+                selection.Deselect();
+
+            selection = value;
+
+            if (selection != null)
+                selection.Select();
+        }
+    }
+
+    private Image EnemyFrame;
 
     private LayerMask MovingLayerMask { get; set; }
+
 
     // Start is called before the first frame update
     void Start()
     {
         PlayerHealth = GetComponent<PlayerHealth>();
         FightingScript = GetComponent<Fighting>();
+        EnemyFrame = GameObject.Find("TargetFrame").GetComponent<Image>();
         MainCamera = Camera.main;
         Animator = GetComponent<Animator>();
         Navigator = GetComponent<NavMeshAgent>();
         WayPointer = GameObject.Find("WayPointer");
-        MovingLayerMask = LayerMask.GetMask("Ground", "Enemy");
+        WayPointerAnimator = WayPointer.GetComponent<Animator>();
+        MovingLayerMask = LayerMask.GetMask("Ground", "Interactable");
+
+        Dummy = Resources.Load<Sprite>("Icons/Dummy");
 
         Navigator.updateRotation = false;
         // Offset = Player.transform.position - MainCamera.transform.position;
@@ -48,18 +76,8 @@ public class PlayerMoving : MonoBehaviour
         MainCamera.transform.LookAt(transform);
         ScaleCamera();
 
-        if (Navigator.remainingDistance <= Navigator.stoppingDistance)
-        {
-            WayPointer.SetActive(false);
-        }
-        else
-        {
-            if (FightingScript.SelectedEnemy == null)
-                WayPointer.SetActive(true);
-        }
 
         MovePlayerClick();
-        // Debug.Log("Has path: " + Navigator.hasPath + ", status: " + Navigator.pathStatus);
     }
 
     private void FixedUpdate()
@@ -75,7 +93,7 @@ public class PlayerMoving : MonoBehaviour
             Offset -= cameraMove;
     }
 
-    
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -83,9 +101,18 @@ public class PlayerMoving : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(Navigator.destination, 0.1f);
     }
+
+    public void ClearSelection()
+    {
+        Selection = null;
+    }
+
+    /// <summary>
+    /// Selecting moving target
+    /// </summary>
     private void MovePlayerClick()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))// Right click
         {
             if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, MovingLayerMask))
             {
@@ -97,40 +124,38 @@ public class PlayerMoving : MonoBehaviour
 
                 if (hit.collider.gameObject.layer == 6) // hit floor layer
                 {
-                    //  FightingScript.SelectedEnemy = null;
                     Navigator.stoppingDistance = 0f;
-
-                    FightingScript.SelectedEnemy = null;
+                    isHeadingToTarget = false;
                     WayPointer.transform.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
-                    WayPointer.SetActive(true);
+                    WayPointerAnimator.Play("ShowWay");
                     Navigator.SetDestination(hit.point);
-
                 }
-                else if (hit.collider.gameObject.layer == 7) // hit enemy layer
+                else if (hit.collider.gameObject.layer == 8) // hit interactable layer
                 {
+                    Selection = hit.collider.gameObject.GetComponent<Interactable>();
+                    isHeadingToTarget = true;
 
-                    WayPointer.SetActive(false);
-                    Navigator.stoppingDistance = FightingScript.AttackRange;
-                    Navigator.SetDestination(hit.collider.gameObject.transform.position);
-                    FightingScript.SelectedEnemy = hit.transform.GetComponentInParent<Enemy>();
+                    if (Selection.Type == InteractableType.Minion)
+                    {
+                        Navigator.stoppingDistance = FightingScript.AttackRange;
+                        FightingScript.TargetEnemy = Selection.GetComponent<Enemy>();
+                    }
+
+                    Navigator.SetDestination(Selection.transform.position);
                 }
             }
         }
-        else if (Input.GetMouseButtonDown(0))
+        else if (Input.GetMouseButtonDown(0)) // Left click
         {
-            if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity))
+            if (Physics.Raycast(MainCamera.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, 1 << 8))
             {
-                if (hit.collider.gameObject.layer != 7)
-                {
-                    FightingScript.SelectedEnemy = null;
-                }else{
-                    FightingScript.SelectedEnemy = hit.collider.gameObject.GetComponent<Enemy>();
-                    Debug.Log("left clicked enemy");
-                }
+                Selection = hit.collider.GetComponent<Interactable>();
+                FightingScript.TargetEnemy = Selection.GetComponent<Enemy>();
             }
             else
             {
-                FightingScript.SelectedEnemy = null;
+                FightingScript.TargetEnemy = null;
+                Selection = null;
             }
         }
     }
