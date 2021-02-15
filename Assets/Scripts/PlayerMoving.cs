@@ -10,6 +10,7 @@ public class PlayerMoving : MonoBehaviour
 {
     public float ScaleSpeed { get; set; } = 5f;
     private PlayerHealth PlayerHealth;
+    public float PlayerMovementSpeed = 10f;
 
     [SerializeField]
     private Camera MainCamera { get; set; }
@@ -66,7 +67,7 @@ public class PlayerMoving : MonoBehaviour
         Navigator.updateRotation = false;
         // Offset = Player.transform.position - MainCamera.transform.position;
         Offset = new Vector3(0.0f, -15.1f, 10.8f);
-
+        Navigator.speed = PlayerMovementSpeed;
     }
 
     // Update is called once per frame

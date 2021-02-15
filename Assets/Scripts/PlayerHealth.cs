@@ -15,6 +15,8 @@ public class PlayerHealth : MonoBehaviour
     private float RegenerationDelay = 2;
     private float RegenerationTimer = 0f;
 
+    private Fighting FightingScript;
+
     [SerializeField]
     private Slider HPBar;
 
@@ -25,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Animator = GetComponent<Animator>();
         Navigator = GetComponent<NavMeshAgent>();
+        FightingScript = GetComponent<Fighting>();
         HPBar = GameObject.FindGameObjectWithTag("HP Bar").GetComponent<Slider>();
         HPBar.minValue = 0;
         HPBar.maxValue = MaxHealth;
@@ -36,12 +39,12 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void FixedUpdate()
     {
-        
+
     }
 
     IEnumerator Regenerate()
@@ -62,6 +65,24 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("You died");
     }
 
+    public void GetDamage(int amount, Vector3 dealersForward)
+    {
+        if (!Animator.GetBool("IsBlocking"))
+        {
+            ChangeHealth(-amount);
+        }
+        else
+        {
+            if (Vector3.Angle(transform.forward, dealersForward) >= 135)
+            {
+                Debug.Log("Blocked");
+            }
+            else
+            {
+                ChangeHealth(-amount);
+            }
+        }
+    }
 
     public void ChangeHealth(int amount)
     {
@@ -80,7 +101,7 @@ public class PlayerHealth : MonoBehaviour
             GetComponent<PlayerMoving>().enabled = false;
             Animator.SetTrigger("Die");
         }
-        else if(amount < 0)
+        else if (amount < 0)
         {
             Animator.SetTrigger("GetHit");
         }

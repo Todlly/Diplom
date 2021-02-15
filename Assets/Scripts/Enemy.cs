@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour//, IHavingHealth
 
     private void CauseDamage()
     {
-        Player.ChangeHealth(-Damage);
+        Player.GetDamage(Damage, transform.forward);
     }
 
     private void Hello()

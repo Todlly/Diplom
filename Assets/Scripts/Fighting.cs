@@ -8,13 +8,16 @@ public class Fighting : MonoBehaviour
 {
     public Sprite Dummy { get; set; }
 
-    public float AttackRange { get; set; } = 6f;
-    private int AttackDamage { get; set; } = 3;
+    public float AttackRange = 6f;
+    private int AttackDamage = 3;
 
-    private Animator Animator { get; set; }
-    private NavMeshAgent Navigator { get; set; }
-    public Enemy TargetEnemy { get; set; }
+    private Animator Animator;
+    private NavMeshAgent Navigator;
+    public Enemy TargetEnemy;
     private PlayerMoving MovingScript;
+
+    private Image ShieldIcon;
+    private Color[] ShieldIconColors = new Color[] { new Color(.3f, .3f, .3f), new Color(1.0f, 1.0f, 1.0f) };
 
     // Start is called before the first frame update
     void Start()
@@ -22,13 +25,15 @@ public class Fighting : MonoBehaviour
         Animator = GetComponent<Animator>();
         Navigator = GetComponent<NavMeshAgent>();
         MovingScript = GetComponent<PlayerMoving>();
-
+        ShieldIcon = GameObject.Find("ShieldIcon").GetComponent<Image>();
+        ShieldIcon.color = ShieldIconColors[0];
     }
+
 
     // Update is called once per frame
     void Update()
     {
-
+        Blocking();
     }
 
     private void TurnToEnemy()
@@ -45,6 +50,27 @@ public class Fighting : MonoBehaviour
     public void Attack()
     {
         TargetEnemy.gameObject.SendMessage("GetDamage", AttackDamage);
+    }
+
+    private void Blocking()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (!Animator.GetBool("IsBlocking"))
+            {
+                Animator.SetBool("IsBlocking", true);
+                Navigator.speed = 0;
+                ShieldIcon.color = ShieldIconColors[1];
+                Debug.Log(ShieldIcon.color);
+            }
+            else
+            {
+                Animator.SetBool("IsBlocking", false);
+                Navigator.speed = MovingScript.PlayerMovementSpeed;
+                ShieldIcon.color = ShieldIconColors[0];
+                Debug.Log(ShieldIcon.color);
+            }
+        }
     }
 
     private void ApproachForAttack()
@@ -67,7 +93,6 @@ public class Fighting : MonoBehaviour
         {
             Animator.SetBool("IsAttacking", false);
         }
-
     }
 
 
