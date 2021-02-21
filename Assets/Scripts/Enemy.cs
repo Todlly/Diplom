@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour//, IHavingHealth
 {
     public enum EnemyType
     {
-        Dummy, Skeleton
+        Dummy, Skeleton, Dragon
     }
     [SerializeField]
     public int MaxHealth;
@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour//, IHavingHealth
         CurrentHealth = MaxHealth;
     }
 
+    
+
     // Update is called once per frame
     void Update()
     {
@@ -57,11 +59,6 @@ public class Enemy : MonoBehaviour//, IHavingHealth
     private void CauseDamage()
     {
         Player.GetDamage(Damage, transform.forward);
-    }
-
-    private void Hello()
-    {
-        Debug.Log("HEllo");
     }
 
     private void GetDamage(int damageAmount)
