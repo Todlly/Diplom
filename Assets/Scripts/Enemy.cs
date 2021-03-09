@@ -22,7 +22,6 @@ public class Enemy : MonoBehaviour//, IHavingHealth
 
     public EnemyType Type;
 
-    public int Damage = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,10 +53,7 @@ public class Enemy : MonoBehaviour//, IHavingHealth
         transform.eulerAngles = new Vector3(0, Quaternion.LookRotation(Player.transform.position - transform.position).eulerAngles.y, 0);
     }
 
-    private void CauseDamage()
-    {
-        Player.GetDamage(Damage, transform.forward);
-    }
+    
 
     private void Hello()
     {
