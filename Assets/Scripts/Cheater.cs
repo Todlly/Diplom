@@ -7,6 +7,7 @@ public class Cheater : MonoBehaviour
     // Start is called before the first frame update
     public GameObject Dummy;
     public GameObject Skeleton;
+    public GameObject Dragon;
 
     private LayerMask floorMask;
     void Start()
@@ -32,6 +33,10 @@ public class Cheater : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.S))
             {
                 GameObject.Instantiate(Skeleton, hit.point, Quaternion.identity);
+            }
+            else if (Input.GetKeyDown(KeyCode.F))
+            {
+                GameObject.Instantiate(Dragon, hit.point, Quaternion.identity);
             }
         }
     }
