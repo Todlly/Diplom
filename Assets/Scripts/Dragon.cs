@@ -11,6 +11,11 @@ public class Dragon : MonoBehaviour
     public float RangeAttackDamage;
     public float NoticeRange;
 
+    [SerializeField]
+    private GameObject Fireball;
+    [SerializeField]
+    private GameObject FireballSpawner;
+
     private NavMeshAgent Navigator;
     private Animator Animator;
 
@@ -25,6 +30,11 @@ public class Dragon : MonoBehaviour
         Animator = GetComponent<Animator>();
 
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+    }
+
+    public void ShootFireball()
+    {
+        GameObject.Instantiate(Fireball, FireballSpawner.transform.position, FireballSpawner.transform.rotation);
     }
 
     // Update is called once per frame

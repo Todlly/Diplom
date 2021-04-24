@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  SelectionDetector: {fileID: 3331613846835614135, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+  SelectionDetector: {fileID: 2489671397461824641}
   isSelected: 0
   Icon: {fileID: 0}
 --- !u!114 &972519661051460435
@@ -88,6 +88,8 @@ MonoBehaviour:
   MeleeAttackDamage: 5
   RangeAttackDamage: 6
   NoticeRange: 25
+  Fireball: {fileID: 8184126889967803623, guid: 8a616eeedef40e64c8e6f62631664d3b, type: 3}
+  FireballSpawner: {fileID: 7491031937513482992}
 --- !u!95 &4137549961421994153
 Animator:
   serializedVersion: 3
@@ -431,6 +433,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+--- !u!1 &2489671397461824641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3331613846835614135, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
+  m_PrefabInstance: {fileID: 914604376448910646}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1627389431582064349 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1883900772700994539, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
