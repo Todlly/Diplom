@@ -14,6 +14,8 @@ public class PlayerMoving : MonoBehaviour
 
     [SerializeField]
     private Camera MainCamera { get; set; }
+    public AudioClip WalkingSound;
+    private AudioSource WalkingSoundPlayer;
 
     private Fighting FightingScript { get; set; }
     private Vector3 Offset { get; set; }
@@ -68,6 +70,10 @@ public class PlayerMoving : MonoBehaviour
         // Offset = Player.transform.position - MainCamera.transform.position;
         Offset = new Vector3(0.0f, -15.1f, 10.8f);
         Navigator.speed = PlayerMovementSpeed;
+
+        WalkingSoundPlayer = gameObject.AddComponent<AudioSource>();
+        WalkingSoundPlayer.clip = WalkingSound;
+        WalkingSoundPlayer.loop = true;
     }
 
     // Update is called once per frame
@@ -84,6 +90,15 @@ public class PlayerMoving : MonoBehaviour
     private void FixedUpdate()
     {
         float speed = Navigator.velocity.magnitude / Navigator.speed;
+        if (speed > 0)
+        {
+            if (!WalkingSoundPlayer.isPlaying)
+                WalkingSoundPlayer.Play();
+        }
+        else
+        {
+            WalkingSoundPlayer.Stop();
+        }
         Animator.SetFloat("Speed", speed);
     }
 
@@ -97,10 +112,10 @@ public class PlayerMoving : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, Navigator.stoppingDistance);
+       // Gizmos.color = Color.yellow;
+        //Gizmos.DrawSphere(transform.position, Navigator.stoppingDistance);
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(Navigator.destination, 0.1f);
+       // Gizmos.DrawSphere(Navigator.destination, 0.1f);
     }
 
     public void ClearSelection()

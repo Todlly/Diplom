@@ -15,6 +15,11 @@ public class PlayerHealth : MonoBehaviour
     private float RegenerationDelay = 2;
     private float RegenerationTimer = 0f;
 
+    private AudioSource AudioPlayer;
+    public AudioClip Block;
+    public AudioClip Hit;
+    public AudioClip Death;
+
     private Fighting FightingScript;
 
     [SerializeField]
@@ -34,6 +39,8 @@ public class PlayerHealth : MonoBehaviour
         CurrentHealth = MaxHealth;
         HPBar.value = CurrentHealth;
         StartCoroutine(Regenerate());
+
+        AudioPlayer = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -69,19 +76,21 @@ public class PlayerHealth : MonoBehaviour
     {
         if (!Animator.GetBool("IsBlocking"))
         {
+            AudioPlayer.PlayOneShot(Hit, AudioPlayer.volume);
             ChangeHealth(-amount);
+            return;
+        }
+
+        if (Vector3.Angle(transform.forward, dealersForward) >= 135)
+        {
+            AudioPlayer.PlayOneShot(Block, AudioPlayer.volume);
         }
         else
         {
-            if (Vector3.Angle(transform.forward, dealersForward) >= 135)
-            {
-                Debug.Log("Blocked");
-            }
-            else
-            {
-                ChangeHealth(-amount);
-            }
+            AudioPlayer.PlayOneShot(Hit, AudioPlayer.volume);
+            ChangeHealth(-amount);
         }
+
     }
 
     public void ChangeHealth(int amount)
@@ -99,6 +108,7 @@ public class PlayerHealth : MonoBehaviour
             IsAlive = false;
             Animator.SetBool("IsAlive", false);
             GetComponent<PlayerMoving>().enabled = false;
+            AudioPlayer.PlayOneShot(Death, AudioPlayer.volume);
             Animator.SetTrigger("Die");
         }
         else if (amount < 0)

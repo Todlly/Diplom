@@ -16,6 +16,11 @@ public class Fighting : MonoBehaviour
     public Enemy TargetEnemy;
     private PlayerMoving MovingScript;
 
+    private AudioSource AudioPlayer;
+
+    public AudioClip attack;
+
+
     private Image ShieldIcon;
     private Color[] ShieldIconColors = new Color[] { new Color(.3f, .3f, .3f), new Color(1.0f, 1.0f, 1.0f) };
 
@@ -27,6 +32,8 @@ public class Fighting : MonoBehaviour
         MovingScript = GetComponent<PlayerMoving>();
         ShieldIcon = GameObject.Find("ShieldIcon").GetComponent<Image>();
         ShieldIcon.color = ShieldIconColors[0];
+
+        AudioPlayer = GetComponent<AudioSource>();
     }
 
 
@@ -49,6 +56,7 @@ public class Fighting : MonoBehaviour
 
     public void Attack()
     {
+        AudioPlayer.PlayOneShot(attack, AudioPlayer.volume);
         TargetEnemy.gameObject.SendMessage("GetDamage", AttackDamage);
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.AI;
 
 public class Dragon : MonoBehaviour
@@ -10,6 +11,9 @@ public class Dragon : MonoBehaviour
     public float MeleeAttackDamage;
     public float RangeAttackDamage;
     public float NoticeRange;
+
+    public AudioClip FireballShot, Woosh, Bite;
+    private AudioSource AudioPlayer;
 
     [SerializeField]
     private GameObject Fireball;
@@ -28,13 +32,19 @@ public class Dragon : MonoBehaviour
         Navigator.updateRotation = false;
         Navigator.stoppingDistance = RangeAttackRange;
         Animator = GetComponent<Animator>();
+        AudioPlayer = GetComponent<AudioSource>();
 
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
     }
 
+    public void PlayFireball()
+    {
+        AudioPlayer.PlayOneShot(FireballShot, AudioPlayer.volume);
+    }
+
     public void ShootFireball()
     {
-        GameObject.Instantiate(Fireball, FireballSpawner.transform.position, FireballSpawner.transform.rotation);
+        Instantiate(Fireball, FireballSpawner.transform.position, FireballSpawner.transform.rotation);
     }
 
     // Update is called once per frame
@@ -80,4 +90,13 @@ public class Dragon : MonoBehaviour
         }
     }
 
+    private void PlayWoosh()
+    {
+        AudioPlayer.PlayOneShot(Woosh, AudioPlayer.volume);
+    }
+
+    private void PlayBite()
+    {
+        AudioPlayer.PlayOneShot(Bite, AudioPlayer.volume);
+    }
 }
