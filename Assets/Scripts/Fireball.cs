@@ -21,14 +21,17 @@ public class Fireball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Entered collision");
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerHealth>().GetDamage(damage, transform.forward);
         }
-        if (!collision.gameObject.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);
-        }
+        //if (!collision.gameObject.CompareTag("Enemy"))
+        //{
+        //    Debug.Log("entered collision");
+        //    Destroy(gameObject);
+        //}
+        Destroy(gameObject);
     }
 
     // Update is called once per frame

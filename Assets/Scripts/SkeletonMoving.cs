@@ -73,6 +73,6 @@ public class SkeletonMoving : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(transform.position, NoticeRange);
+       // Gizmos.DrawSphere(transform.position, NoticeRange);
     }
 }

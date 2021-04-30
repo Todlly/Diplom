@@ -17,7 +17,8 @@ public class Fighting : MonoBehaviour
     private PlayerMoving MovingScript;
 
     private AudioSource AudioPlayer;
-
+    public AudioClip EquipSound;
+    private AudioSource EquipSoundPlayer;
     public AudioClip attack;
 
 
@@ -34,6 +35,9 @@ public class Fighting : MonoBehaviour
         ShieldIcon.color = ShieldIconColors[0];
 
         AudioPlayer = GetComponent<AudioSource>();
+        EquipSoundPlayer = gameObject.AddComponent<AudioSource>();
+        EquipSoundPlayer.clip = EquipSound;
+        EquipSoundPlayer.volume = 0.4f;
     }
 
 
@@ -64,6 +68,7 @@ public class Fighting : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            EquipSoundPlayer.Play();
             if (!Animator.GetBool("IsBlocking"))
             {
                 Animator.SetBool("IsBlocking", true);

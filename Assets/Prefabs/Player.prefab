@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMovementSpeed: 10
+  MainCamera: {fileID: 0}
   WalkingSound: {fileID: 8300000, guid: 50e9db0f6c50b4645b61386b64c2cb8d, type: 3}
   isHeadingToTarget: 0
 --- !u!114 &8691566916976015186
@@ -83,6 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackRange: 6
   TargetEnemy: {fileID: 0}
+  EquipSound: {fileID: 8300000, guid: 263427d9036a85e4ba22e34db015122f, type: 3}
   attack: {fileID: 8300000, guid: a2893a6f5f0b8ea48b285b21c5a57ebc, type: 3}
 --- !u!54 &1020774224023377141
 Rigidbody:
@@ -135,7 +137,7 @@ NavMeshAgent:
   m_AngularSpeed: 5000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0

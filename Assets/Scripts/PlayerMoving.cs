@@ -12,9 +12,10 @@ public class PlayerMoving : MonoBehaviour
     private PlayerHealth PlayerHealth;
     public float PlayerMovementSpeed = 10f;
 
-    [SerializeField]
-    private Camera MainCamera { get; set; }
+
+    public Camera MainCamera;
     public AudioClip WalkingSound;
+    
     private AudioSource WalkingSoundPlayer;
 
     private Fighting FightingScript { get; set; }
@@ -58,6 +59,7 @@ public class PlayerMoving : MonoBehaviour
         FightingScript = GetComponent<Fighting>();
         EnemyFrame = GameObject.Find("TargetFrame").GetComponent<Image>();
         MainCamera = Camera.main;
+        //MainCamera = Camera.current;
         Animator = GetComponent<Animator>();
         Navigator = GetComponent<NavMeshAgent>();
         WayPointer = GameObject.Find("WayPointer");
@@ -74,6 +76,8 @@ public class PlayerMoving : MonoBehaviour
         WalkingSoundPlayer = gameObject.AddComponent<AudioSource>();
         WalkingSoundPlayer.clip = WalkingSound;
         WalkingSoundPlayer.loop = true;
+        
+        
     }
 
     // Update is called once per frame
@@ -105,7 +109,7 @@ public class PlayerMoving : MonoBehaviour
     private void ScaleCamera()
     {
         Vector3 cameraMove = MainCamera.transform.forward * ScaleSpeed * Input.mouseScrollDelta.y;
-        if ((Offset - cameraMove).magnitude >= 10)
+        if ((Offset - cameraMove).magnitude >= 10 && (Offset - cameraMove).magnitude <= 400)
             Offset -= cameraMove;
     }
 
