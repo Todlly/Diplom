@@ -10,14 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 982139293529423920}
   - component: {fileID: 5305873993343498180}
+  - component: {fileID: 324079625431261829}
   - component: {fileID: 2596793039332381763}
   - component: {fileID: 8691566916976015186}
   - component: {fileID: 1020774224023377141}
   - component: {fileID: 6255836014522043961}
-  - component: {fileID: 324079625431261829}
   - component: {fileID: 3804772287431072416}
   - component: {fileID: 6059511248819351574}
-  - component: {fileID: 5181875246725396254}
+  - component: {fileID: 7527492974265063615}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -54,6 +54,28 @@ CapsuleCollider:
   m_Height: 3.9161081
   m_Direction: 1
   m_Center: {x: 0, y: 1.8709912, z: 0}
+--- !u!195 &324079625431261829
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7098995761130740695}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 10
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 5000
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &2596793039332381763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +91,7 @@ MonoBehaviour:
   PlayerMovementSpeed: 10
   MainCamera: {fileID: 0}
   WalkingSound: {fileID: 8300000, guid: 50e9db0f6c50b4645b61386b64c2cb8d, type: 3}
+  mixer: {fileID: 24100000, guid: f57cf3257cb287b46b0380c25e8dc016, type: 2}
   isHeadingToTarget: 0
 --- !u!114 &8691566916976015186
 MonoBehaviour:
@@ -121,28 +144,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!195 &324079625431261829
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7098995761130740695}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 10
-  m_Acceleration: 100
-  avoidancePriority: 50
-  m_AngularSpeed: 5000
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &3804772287431072416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +169,7 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7098995761130740695}
   m_Enabled: 1
---- !u!82 &5181875246725396254
+--- !u!82 &7527492974265063615
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,10 +178,10 @@ AudioSource:
   m_GameObject: {fileID: 7098995761130740695}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8865279533159777375, guid: f57cf3257cb287b46b0380c25e8dc016, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.199
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
