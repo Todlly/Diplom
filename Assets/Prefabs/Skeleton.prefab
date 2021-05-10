@@ -209,6 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackRange: 5
   NoticeRange: 20
+  Damage: 4
 --- !u!114 &1495727457728070664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +225,6 @@ MonoBehaviour:
   MaxHealth: 0
   CurrentHealth: 0
   Type: 1
-  Damage: 4
 --- !u!95 &5718684299688464159
 Animator:
   serializedVersion: 3
@@ -295,7 +295,7 @@ MonoBehaviour:
   Type: 0
   SelectionDetector: {fileID: 6719247754847760123}
   isSelected: 0
-  Icon: {fileID: 21300000, guid: 30f6367ff4a3a57439e8945de3d08ba6, type: 3}
+  Icon: {fileID: 21300000, guid: 33f50148133db8c44be9865460a24395, type: 3}
 --- !u!1 &2291781333206924536
 GameObject:
   m_ObjectHideFlags: 0

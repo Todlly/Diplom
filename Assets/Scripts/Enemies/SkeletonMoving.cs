@@ -27,14 +27,12 @@ public class SkeletonMoving : MonoBehaviour
         Animator = GetComponent<Animator>();
         Navigator = GetComponent<NavMeshAgent>();
         Navigator.stoppingDistance = AttackRange;
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         SelfEnemyScript = GetComponent<Enemy>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
     private void CauseDamage()
@@ -49,6 +47,13 @@ public class SkeletonMoving : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Player == null)
+        {
+            
+            Player = GameObject.Find("Player").GetComponent<PlayerHealth>();
+            return;
+        }
+
         Animator.SetFloat("Speed", Navigator.velocity.magnitude / Navigator.speed);
         float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
         if (distanceToPlayer <= NoticeRange)
@@ -73,6 +78,6 @@ public class SkeletonMoving : MonoBehaviour
 
     void OnDrawGizmos()
     {
-       // Gizmos.DrawSphere(transform.position, NoticeRange);
+        // Gizmos.DrawSphere(transform.position, NoticeRange);
     }
 }

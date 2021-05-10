@@ -6,7 +6,7 @@ MonoImporter:
   defaultReferences:
   - SelectionDetector: {fileID: 3331613846835614135, guid: 08c7e2da440f5994195c5b2bed2905c8, type: 3}
   - Icon: {instanceID: 0}
-  executionOrder: 0
+  executionOrder: 350
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

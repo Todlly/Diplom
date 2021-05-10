@@ -1,14 +1,14 @@
-//using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class Enemy : MonoBehaviour//, IHavingHealth
 {
     public enum EnemyType
     {
-        Dummy, Skeleton
+        Dummy, Skeleton, Dragon
     }
     [SerializeField]
     public int MaxHealth;
@@ -22,7 +22,6 @@ public class Enemy : MonoBehaviour//, IHavingHealth
 
     public EnemyType Type;
 
-    // Start is called before the first frame update
     void Start()
     {
         Animator = GetComponent<Animator>();
@@ -35,11 +34,10 @@ public class Enemy : MonoBehaviour//, IHavingHealth
         CurrentHealth = MaxHealth;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Player == null)
-            Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+            Player = GameObject.Find("Player").GetComponent<PlayerHealth>();
 
         HealthBar.value = CurrentHealth;
     }

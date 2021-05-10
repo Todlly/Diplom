@@ -82,14 +82,12 @@ public class Fighting : MonoBehaviour
                 Animator.SetBool("IsBlocking", true);
                 Navigator.speed = 0;
                 ShieldIcon.color = ShieldIconColors[1];
-                Debug.Log(ShieldIcon.color);
             }
             else
             {
                 Animator.SetBool("IsBlocking", false);
                 Navigator.speed = MovingScript.PlayerMovementSpeed;
                 ShieldIcon.color = ShieldIconColors[0];
-                Debug.Log(ShieldIcon.color);
             }
         }
     }

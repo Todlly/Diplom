@@ -35,7 +35,6 @@ public class Dragon : MonoBehaviour
         Animator = GetComponent<Animator>();
         AudioPlayer = GetComponent<AudioSource>();
 
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
     }
 
     public void PlayFireball()
@@ -51,11 +50,16 @@ public class Dragon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     void FixedUpdate()
     {
+        if (Player == null)
+        {
+            Player = GameObject.Find("Player").GetComponent<PlayerHealth>();
+            return;
+        }
+
         Animator.SetFloat("Speed", Navigator.velocity.magnitude / Navigator.speed);
         float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
         if (distanceToPlayer <= NoticeRange)
