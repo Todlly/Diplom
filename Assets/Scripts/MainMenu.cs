@@ -4,22 +4,29 @@ using UnityEngine;
 using static SoundtrackPlayer;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class MainMenu : MonoBehaviour
 {
     public AudioMixer AudioMixer;
     public GameObject MainMenuObj, SettingsMenuObj;
 
+    public Slider SoundsSlider, MusicSlider, MasterSlider;
+
+
     private void Start()
     {
         AudioMixer = Resources.Load<AudioMixer>("MainAudioMixer");
-        AudioSource soundtrack = SoundtrackPlayerInstance.GetComponent<AudioSource>();
 
-        if (soundtrack.isPlaying)
-            soundtrack.Stop();
+        AudioMixer.GetFloat("Volume of Sounds", out float soundsV);
+        AudioMixer.GetFloat("Volume of Music", out float musicV);
+        AudioMixer.GetFloat("Volume of Master", out float masterV);
+        SoundsSlider.value = Mathf.Pow(10, soundsV / 20);
+        MusicSlider.value = Mathf.Pow(10, musicV / 20);
+        MasterSlider.value = Mathf.Pow(10, masterV / 20);
 
-        soundtrack.clip = SoundtrackPlayerInstance.tracks[1];
-        soundtrack.Play();
+        SoundtrackPlayerInstance.ChangeClip("Menu theme");
     }
 
     public void SwitchToMainMenu()

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using static SoundtrackPlayer;
 
 public class Menu : MonoBehaviour
 {
@@ -14,7 +16,21 @@ public class Menu : MonoBehaviour
     [SerializeField]
     private GameObject SettingsMenu;
 
+    public Slider SoundsSlider, MusicSlider, MasterSlider;
+
+
     private bool IsMenuOpened = false;
+
+    private void Start()
+    {
+        AudioMixer AudioMixer = Resources.Load<AudioMixer>("MainAudioMixer");
+        AudioMixer.GetFloat("Volume of Sounds", out float soundsV);
+        AudioMixer.GetFloat("Volume of Music", out float musicV);
+        AudioMixer.GetFloat("Volume of Master", out float masterV);
+        AdjustSoundsVolume(Mathf.Pow(10, soundsV / 20));
+        MusicSlider.value = Mathf.Pow(10, musicV / 20);
+        MasterSlider.value = Mathf.Pow(10, masterV / 20);
+    }
 
     public void OpenSettingsMenu()
     {
@@ -41,6 +57,8 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
@@ -55,7 +73,7 @@ public class Menu : MonoBehaviour
 
     public void AdjustSoundsVolume(float value)
     {
-        GlobalAudioMixer.SetFloat("Volume of Sounds",  Mathf.Log10(value) * 20);
+        GlobalAudioMixer.SetFloat("Volume of Sounds", Mathf.Log10(value) * 20);
     }
 
     public void AdjustMusicVolume(float value)

@@ -69,8 +69,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
+        FindObjectOfType<Timer>().Stop();
         gameObject.SendMessage("ClearSelection");
-        Debug.Log("You died");
+        GameObject.Find("End Menu").GetComponent<EndMenu>().Defeat();
     }
 
     public void GetDamage(int amount, Vector3 dealersForward)

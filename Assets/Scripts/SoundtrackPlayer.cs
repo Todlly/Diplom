@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SoundtrackPlayer : MonoBehaviour
 {
-    public AudioClip[] tracks;
+    private Dictionary<string, AudioClip> clips = new Dictionary<string, AudioClip>();
     private AudioSource source;
     // Start is called before the first frame update
     public static SoundtrackPlayer SoundtrackPlayerInstance;
@@ -21,6 +21,16 @@ public class SoundtrackPlayer : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        clips.Add("Main theme", Resources.Load<AudioClip>("Sounds/Soundtracks/MainTheme"));
+        clips.Add("Menu theme", Resources.Load<AudioClip>("Sounds/Soundtracks/MenuTheme"));
+    }
+
+    public void ChangeClip(string clipName)
+    {
+        source.Stop();
+        source.clip = clips[clipName];
+        source.Play();
     }
 
     void Start()
