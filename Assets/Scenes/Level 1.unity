@@ -3696,7 +3696,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.5
+  m_fontSize: 28.3
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5047,7 +5047,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Right click to select
+  m_text: Left click to select
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d668b525e9c516c4d8cd253b5570038d, type: 2}
   m_sharedMaterial: {fileID: 3935635104652319278, guid: d668b525e9c516c4d8cd253b5570038d, type: 2}
@@ -5074,7 +5074,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.95
+  m_fontSize: 27.8
   m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6935,7 +6935,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Left click to move and fight
+  m_text: Right click to move and fight
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d668b525e9c516c4d8cd253b5570038d, type: 2}
   m_sharedMaterial: {fileID: 3935635104652319278, guid: d668b525e9c516c4d8cd253b5570038d, type: 2}
@@ -6962,7 +6962,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.9
+  m_fontSize: 21.95
   m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 1
