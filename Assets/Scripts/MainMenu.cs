@@ -5,15 +5,18 @@ using static SoundtrackPlayer;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using UnityEngine.Networking;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
     public AudioMixer AudioMixer;
-    public GameObject MainMenuObj, SettingsMenuObj;
+    public GameObject MainMenuObj, SettingsMenuObj, LeaderboardsObj, NicknameInputObj;
 
     public Slider SoundsSlider, MusicSlider, MasterSlider;
 
+    [SerializeField]
+    private TMP_InputField inputField;
 
     private void Start()
     {
@@ -29,9 +32,27 @@ public class MainMenu : MonoBehaviour
         SoundtrackPlayerInstance.ChangeClip("Menu theme");
     }
 
+    public void SetNickname()
+    {
+        if (inputField.text != "")
+        {
+            PlayerPrefs.SetString("nickname", inputField.text);
+            FindObjectOfType<LeaderBoards>().GetLeaderboards();
+            SwitchToLeaderboards();
+        }
+    }
+
+    public void SwitchToLeaderboards()
+    {
+        MainMenuObj.SetActive(false);
+        LeaderboardsObj.SetActive(true);
+        NicknameInputObj.SetActive(false);
+    }
+
     public void SwitchToMainMenu()
     {
         SettingsMenuObj.SetActive(false);
+        LeaderboardsObj.SetActive(false);
         MainMenuObj.SetActive(true);
     }
 
@@ -39,6 +60,11 @@ public class MainMenu : MonoBehaviour
     {
         MainMenuObj.SetActive(false);
         SettingsMenuObj.SetActive(true);
+    }
+
+    public void SwitchToSetNickname()
+    {
+        NicknameInputObj.SetActive(true);
     }
 
     public void Play()

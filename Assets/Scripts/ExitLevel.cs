@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static SoundtrackPlayer;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ExitLevel : MonoBehaviour
 {
@@ -29,6 +30,14 @@ public class ExitLevel : MonoBehaviour
     {
         float time = FindObjectOfType<Timer>().Stop();
         resultLabel.text = "Your time: " + (int)time + " seconds.";
+        string scoreName = "score" + (SceneManager.GetActiveScene().buildIndex).ToString();
+
+        if (PlayerPrefs.GetInt(scoreName) > (int)time || PlayerPrefs.GetInt(scoreName) <= 0)
+        {
+            PlayerPrefs.SetInt(scoreName, (int)time);
+        }
+
+        Debug.Log(scoreName + " = " + PlayerPrefs.GetInt(scoreName) + " nickname = " + PlayerPrefs.GetString("nickname"));
         EndMenu.Win();
     }
 
@@ -36,6 +45,8 @@ public class ExitLevel : MonoBehaviour
     {
         AliveEnemies.AddRange(FindObjectsOfType<Enemy>());
         SoundtrackPlayerInstance.ChangeClip("Main theme");
+        Debug.Log("score = " + PlayerPrefs.GetInt("score" + (SceneManager.GetActiveScene().buildIndex ).ToString()) + " nickname = " + PlayerPrefs.GetString("nickname"));
+
     }
 
     private void OnTriggerStay(Collider collision)
