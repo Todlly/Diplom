@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     public GameObject MainMenuObj, SettingsMenuObj, LeaderboardsObj, NicknameInputObj;
 
     public Slider SoundsSlider, MusicSlider, MasterSlider;
+    public GameObject AdminPanel;
 
     [SerializeField]
     private TMP_InputField inputField;
@@ -37,7 +38,7 @@ public class MainMenu : MonoBehaviour
         if (inputField.text != "")
         {
             PlayerPrefs.SetString("nickname", inputField.text);
-            FindObjectOfType<LeaderBoards>().GetLeaderboards();
+            FindObjectOfType<LeaderBoards>().UpdateDatabase();
             SwitchToLeaderboards();
         }
     }
@@ -90,5 +91,14 @@ public class MainMenu : MonoBehaviour
     public void AdjustMasterVolume(float value)
     {
         AudioMixer.SetFloat("Volume of Master", Mathf.Log10(value) * 20);
+    }
+
+    void OnGUI()
+    {
+        Event e = Event.current;
+        if (e.type == EventType.KeyDown && e.control && e.keyCode == KeyCode.O)
+        {
+            AdminPanel.SetActive(true);
+        }
     }
 }

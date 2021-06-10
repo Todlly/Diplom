@@ -74,25 +74,24 @@ public class PlayerHealth : MonoBehaviour
         GameObject.Find("End Menu").GetComponent<EndMenu>().Defeat();
     }
 
-    public void GetDamage(int amount, Vector3 dealersForward)
+    public void GetDamage(int amount, Vector3 dealersForward) // Функция получения урона героем
     {
-        if (!Animator.GetBool("IsBlocking"))
+        if (!Animator.GetBool("IsBlocking")) // Если нет блока, просто получить урон
         {
-            AudioPlayer.PlayOneShot(Hit, AudioPlayer.volume);
-            ChangeHealth(-amount);
-            return;
+            AudioPlayer.PlayOneShot(Hit, AudioPlayer.volume); // Проиграть звук попадания
+            ChangeHealth(-amount); // Уменьшить здоровье
+            return; // Выйти из функции
         }
 
-        if (Vector3.Angle(transform.forward, dealersForward) >= 135)
+        if (Vector3.Angle(transform.forward, dealersForward) >= 135) // Если щит поднят, и атакующий спереди от игрока
         {
-            AudioPlayer.PlayOneShot(Block, AudioPlayer.volume);
+            AudioPlayer.PlayOneShot(Block, AudioPlayer.volume); // Проиграть звук попадания по щиту
         }
-        else
+        else // Если атакующий не спереди, то всё равно получить урон
         {
-            AudioPlayer.PlayOneShot(Hit, AudioPlayer.volume);
-            ChangeHealth(-amount);
+            AudioPlayer.PlayOneShot(Hit, AudioPlayer.volume); // Проиграть звук попадания
+            ChangeHealth(-amount); // Уменьшить здоровье
         }
-
     }
 
     public void ChangeHealth(int amount)

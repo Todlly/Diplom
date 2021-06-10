@@ -49,7 +49,6 @@ public class SkeletonMoving : MonoBehaviour
     {
         if (Player == null)
         {
-            
             Player = GameObject.Find("Player").GetComponent<PlayerHealth>();
             return;
         }

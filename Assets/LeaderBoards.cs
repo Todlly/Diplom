@@ -12,7 +12,7 @@ public class LeaderBoards : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI levelLabel;
 
-    private string serverURL = "http://localhost/leaderboard";
+    public static string serverURL = "http://93.100.45.246:18080/leaderboard";
     private int currentLevel = 1;
     private int levelsCount = 2;
     private int CurrentLevel
@@ -28,86 +28,109 @@ public class LeaderBoards : MonoBehaviour
         }
     }
 
-    public void SetHighscore()
+    public void UpdateDatabase()
     {
+        StartCoroutine(UpdateDatabaseCoroutine());
+    }
+
+    private IEnumerator UpdateDatabaseCoroutine() // Обновление базы
+    {
+
         string nickname = "";
         if (PlayerPrefs.HasKey("nickname"))
             nickname = PlayerPrefs.GetString("nickname");
-        else
-            return;
+
         string score = "";
         if (PlayerPrefs.HasKey("score" + CurrentLevel))
             score = PlayerPrefs.GetInt("score" + CurrentLevel).ToString();
-        else
-            return;
-        Debug.Log("Nickname " + nickname + ", score" + CurrentLevel + " " + score);
-        string level = CurrentLevel.ToString();
 
-        List<IMultipartFormSection> form = new List<IMultipartFormSection>();
-        form.Add(new MultipartFormDataSection("nickname", nickname));
-        form.Add(new MultipartFormDataSection("score", score));
-        form.Add(new MultipartFormDataSection("level", level));
-
-        UnityWebRequest request = UnityWebRequest.Post(serverURL + "/set_score.php", form);
-
-        
-
-        if (request.isHttpError || request.isNetworkError)
+        if (nickname == "")
         {
-            Debug.LogError(request.error);
+            Debug.Log("no nickname");
+        }
+        else if (score == "")
+        {
+            Debug.Log("no local score");
         }
         else
         {
-            string[] pairs = request.downloadHandler.text.Split(';');
-            bool foundPlayer = false;
+            Debug.Log("Current nickname is: " + nickname + ", current score for level " + CurrentLevel + " is: " + score);
+            string level = CurrentLevel.ToString();
 
-            for (int i = 0; i < pairs.Length; i++)
+            List<IMultipartFormSection> form = new List<IMultipartFormSection>();
+            form.Add(new MultipartFormDataSection("nickname", nickname));
+            form.Add(new MultipartFormDataSection("score", score));
+            form.Add(new MultipartFormDataSection("level", level));
+
+            UnityWebRequest request = UnityWebRequest.Post(serverURL + "/set_score.php", form);
+
+            yield return request.SendWebRequest();
+
+            if (request.isHttpError || request.isNetworkError)
             {
-                if (pairs[i].Split(':')[0] == nickname)
+                Debug.LogError("Error : " + request.error);
+                foreach(TextMeshProUGUI label in fields)
                 {
-                    fields[9].text = (i + 1).ToString();
-                    fields[10].text = nickname;
-                    fields[11].text = pairs[i].Split(':')[1];
-                    foundPlayer = true;
-                    break;
+                    label.text = "???";
+                }
+                yield break;
+            }
+            else
+            {
+                Debug.Log("Got from setting: " + request.downloadHandler.text);
+                string[] pairs = request.downloadHandler.text.Split(';');
+                bool foundPlayer = false;
+
+                for (int i = 0; i < pairs.Length; i++)
+                {
+                    if (pairs[i].Split(':')[0] == nickname)
+                    {
+                        fields[9].text = (i + 1).ToString();
+                        fields[10].text = nickname;
+                        fields[11].text = pairs[i].Split(':')[1];
+                        foundPlayer = true;
+                        break;
+                    }
                 }
             }
         }
+
+        GetLeaderboards();
     }
 
     public void GetLeaderboards()
     {
-        StartCoroutine(LeaderboardRequest(CurrentLevel + ""));
-        GetPlayerHighscore();
+        StartCoroutine(GetMainLeaderboard(CurrentLevel + "")); // Получение всей базы
+        GetPlayerHighscore(); // Получение данных для текущего игрока
     }
 
-    public void GetPlayerHighscore()
+    public void GetPlayerHighscore() // Получение данных об игроке
     {
-        if (PlayerPrefs.HasKey("nickname"))
+        if (PlayerPrefs.HasKey("nickname")) // Если задан никнейм
         {
-            StartCoroutine(GetPlayerCoroutine(PlayerPrefs.GetString("nickname")));
+            StartCoroutine(GetPlayerCoroutine(PlayerPrefs.GetString("nickname"))); // Отправить запрос
         }
         else
         {
-            Debug.Log("Nickname not set");
+            Debug.Log("Nickname not set"); // Если никнейм не занят, предупредить об этом
         }
     }
 
-    private IEnumerator GetPlayerCoroutine(string nickname)
+    private IEnumerator GetPlayerCoroutine(string nickname) // Запрос на данные об игроке
     {
         List<IMultipartFormSection> form = new List<IMultipartFormSection>();
         form.Add(new MultipartFormDataSection("nickname", nickname));
         form.Add(new MultipartFormDataSection("level", CurrentLevel.ToString()));
 
-        UnityWebRequest request = UnityWebRequest.Post(serverURL + "/get_scores.php", form);
+        UnityWebRequest request = UnityWebRequest.Post(serverURL + "/get_scores.php", form); // Сборка запроса на сервер
 
-        yield return request.SendWebRequest();
+        yield return request.SendWebRequest(); // Отправление запроса на сервер
 
         if (request.isHttpError || request.isNetworkError)
         {
             Debug.LogError(request.error);
         }
-        else
+        else // Обработка ответа сервера
         {
             string[] pairs = request.downloadHandler.text.Split(';');
             bool foundPlayer = false;
@@ -133,22 +156,15 @@ public class LeaderBoards : MonoBehaviour
         }
     }
 
-    private IEnumerator LeaderboardRequest(string level)
+    private IEnumerator GetMainLeaderboard(string level) // Запрос данных об уровне
     {
-        try
-        {
-            SetHighscore();
-        } catch 
-        {
-
-        }
 
         List<IMultipartFormSection> form = new List<IMultipartFormSection>();
         form.Add(new MultipartFormDataSection("level", level));
 
-        UnityWebRequest request = UnityWebRequest.Post(serverURL + "/get_scores.php", form);
+        UnityWebRequest request = UnityWebRequest.Post(serverURL + "/get_scores.php", form); // Сборка запроса на сервер
 
-        yield return request.SendWebRequest();
+        yield return request.SendWebRequest(); // Запрос на сервер
 
         if (request.isHttpError || request.isNetworkError)
         {
@@ -156,12 +172,12 @@ public class LeaderBoards : MonoBehaviour
         }
         else
         {
-            Debug.Log(request.downloadHandler.text);
-            UpdateLeaderboard(request.downloadHandler.text);
+            Debug.Log("Got from getting: " + request.downloadHandler.text);
+            PaintLeaderboard(request.downloadHandler.text); // Обновление таблицы
         }
     }
 
-    private void UpdateLeaderboard(string answer)
+    private void PaintLeaderboard(string answer) // Обновление таблицы из ответа сервера
     {
         string[] pairs = answer.Split(';');
         for (int i = 0; i < 3; i++)
@@ -178,7 +194,7 @@ public class LeaderBoards : MonoBehaviour
         if (CurrentLevel + 1 <= levelsCount)
         {
             CurrentLevel++;
-            GetLeaderboards();
+            StartCoroutine(UpdateDatabaseCoroutine());
         }
     }
 
@@ -187,15 +203,13 @@ public class LeaderBoards : MonoBehaviour
         if (CurrentLevel - 1 > 0)
         {
             CurrentLevel--;
-            GetLeaderboards();
+            StartCoroutine(UpdateDatabaseCoroutine());
         }
     }
-
-
 
     private void OnEnable()
     {
         CurrentLevel = 1;
-        GetLeaderboards();
+        StartCoroutine(UpdateDatabaseCoroutine());
     }
 }

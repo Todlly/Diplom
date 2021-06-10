@@ -46,7 +46,6 @@ public class ExitLevel : MonoBehaviour
         AliveEnemies.AddRange(FindObjectsOfType<Enemy>());
         SoundtrackPlayerInstance.ChangeClip("Main theme");
         Debug.Log("score = " + PlayerPrefs.GetInt("score" + (SceneManager.GetActiveScene().buildIndex ).ToString()) + " nickname = " + PlayerPrefs.GetString("nickname"));
-
     }
 
     private void OnTriggerStay(Collider collision)

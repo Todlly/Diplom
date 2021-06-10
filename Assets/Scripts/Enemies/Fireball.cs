@@ -8,12 +8,7 @@ public class Fireball : MonoBehaviour
     private int damage = 4;
 
     private float timer = 20f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+	
     private void FixedUpdate()
     {
         transform.position += transform.forward * speed * Time.deltaTime;
@@ -21,20 +16,13 @@ public class Fireball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Entered collision");
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerHealth>().GetDamage(damage, transform.forward);
         }
-        //if (!collision.gameObject.CompareTag("Enemy"))
-        //{
-        //    Debug.Log("entered collision");
-        //    Destroy(gameObject);
-        //}
         Destroy(gameObject);
     }
 
-    // Update is called once per frame
     void Update()
     {
         timer -= Time.deltaTime;
